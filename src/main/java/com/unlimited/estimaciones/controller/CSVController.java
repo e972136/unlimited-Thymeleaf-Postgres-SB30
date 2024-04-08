@@ -21,7 +21,7 @@ public class CSVController {
         this.fileService = fileService;
     }
 
-    @PostMapping(path="/upload",
+    @PostMapping(path="/upload_estimacion",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Subir archivo, seleccionar el archivo ejemplo (Consulta1.scv) cuenta con 11k registros")
     public ResponseEntity<String> uploadFile(
@@ -32,6 +32,81 @@ public class CSVController {
         if (CSVHelper.hasCSVFormat(file)) {
             try {
                 fileService.save(file);
+
+                message = "Uploaded the file successfully: " + file.getOriginalFilename();
+                return ResponseEntity.status(HttpStatus.OK).body(message);
+            } catch (Exception e) {
+                System.out.println(e+"");
+                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
+            }
+        }
+
+        message = "Please upload a csv file!";
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+    }
+
+    @PostMapping(path="/upload_repuestos",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "Subir archivo, seleccionar el archivo ejemplo (Consulta1.scv) cuenta con 11k registros")
+    public ResponseEntity<String> uploadFileRepuestos(
+            @RequestParam("file") MultipartFile file
+    ) {
+        String message = "";
+
+        if (CSVHelper.hasCSVFormat(file)) {
+            try {
+                fileService.saveRepuestos(file);
+
+                message = "Uploaded the file successfully: " + file.getOriginalFilename();
+                return ResponseEntity.status(HttpStatus.OK).body(message);
+            } catch (Exception e) {
+                System.out.println(e+"");
+                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
+            }
+        }
+
+        message = "Please upload a csv file!";
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+    }
+
+    @PostMapping(path="/upload_reparaciones",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "Subir archivo, seleccionar el archivo ejemplo (Consulta1.scv) cuenta con 11k registros")
+    public ResponseEntity<String> uploadFileReparaciones(
+            @RequestParam("file") MultipartFile file
+    ) {
+        String message = "";
+
+        if (CSVHelper.hasCSVFormat(file)) {
+            try {
+                fileService.saveReparaciones(file);
+
+                message = "Uploaded the file successfully: " + file.getOriginalFilename();
+                return ResponseEntity.status(HttpStatus.OK).body(message);
+            } catch (Exception e) {
+                System.out.println(e+"");
+                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
+            }
+        }
+
+        message = "Please upload a csv file!";
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+    }
+
+    @PostMapping(path="/upload_reparaciones_adicionales",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "Subir archivo, seleccionar el archivo ejemplo (Consulta1.scv) cuenta con 11k registros")
+    public ResponseEntity<String> uploadFileReparacionesAdicionales(
+            @RequestParam("file") MultipartFile file
+    ) {
+        String message = "";
+
+        if (CSVHelper.hasCSVFormat(file)) {
+            try {
+                fileService.saveReparacionesAdicionales(file);
 
                 message = "Uploaded the file successfully: " + file.getOriginalFilename();
                 return ResponseEntity.status(HttpStatus.OK).body(message);

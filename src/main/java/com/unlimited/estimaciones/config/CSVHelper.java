@@ -1,6 +1,9 @@
 package com.unlimited.estimaciones.config;
 
 import com.unlimited.estimaciones.entity.Estimacion;
+import com.unlimited.estimaciones.entity.Reparacion;
+import com.unlimited.estimaciones.entity.ReparacionAdicional;
+import com.unlimited.estimaciones.entity.Repuesto;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -10,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -72,5 +76,88 @@ public class CSVHelper {
             throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
         }
 
+    }
+
+    public static List<Repuesto> csvToRepuesto(InputStream inputStream) {
+        try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+             CSVParser csvParser = new CSVParser(fileReader,CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())) {
+
+            List<Repuesto> tutorials = new ArrayList<>();
+
+            Iterable<CSVRecord> csvRecords = csvParser.getRecords();
+
+//            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+
+
+
+            for (CSVRecord csvRecord : csvRecords) {
+                try{
+                    Repuesto repuesto = new Repuesto();
+                    repuesto.setEstimacionId(Integer.parseInt(csvRecord.get("estimacion_id")));
+                    repuesto.setDescripcion(csvRecord.get("descripcion"));
+                    repuesto.setPrecio(new BigDecimal(csvRecord.get("precio")));
+                    tutorials.add(repuesto);
+                }catch (Exception e){
+                    System.out.println(e+""+csvRecord);
+                }
+            }
+
+            return tutorials;
+        } catch (IOException e) {
+            throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
+        }
+    }
+
+    public static List<Reparacion> csvToReparaciones(InputStream inputStream) {
+        try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+             CSVParser csvParser = new CSVParser(fileReader,CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())) {
+
+            List<Reparacion> tutorials = new ArrayList<>();
+
+            Iterable<CSVRecord> csvRecords = csvParser.getRecords();
+
+            for (CSVRecord csvRecord : csvRecords) {
+                try{
+                    Reparacion reparacion = new Reparacion();
+                    reparacion.setEstimacionId(Integer.parseInt(csvRecord.get("estimacion_id")));
+                    reparacion.setDetalleReparacion(csvRecord.get("detalle_reparacion"));
+                    reparacion.setPrecio(new BigDecimal(csvRecord.get("precio_")));
+                    tutorials.add(reparacion);
+                }catch (Exception e){
+                    System.out.println(e+""+csvRecord);
+                }
+            }
+
+            return tutorials;
+        } catch (IOException e) {
+            throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
+        }
+    }
+
+    public static List<ReparacionAdicional> csvToReparacionAdicional(InputStream inputStream) {
+        try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+             CSVParser csvParser = new CSVParser(fileReader,CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())) {
+
+            List<ReparacionAdicional> tutorials = new ArrayList<>();
+
+            Iterable<CSVRecord> csvRecords = csvParser.getRecords();
+//            "estimacion_id","reparacion_adicional","valor_reparacion","Tipo"
+            for (CSVRecord csvRecord : csvRecords) {
+                try{
+                    ReparacionAdicional reparacionAdicional = new ReparacionAdicional();
+                    reparacionAdicional.setEstimacionId(Integer.parseInt(csvRecord.get("estimacion_id")));
+                    reparacionAdicional.setReparacionAdicionalDetalle(csvRecord.get("reparacion_adicional"));
+                    reparacionAdicional.setValorReparacion(new BigDecimal(csvRecord.get("valor_reparacion")));
+                    reparacionAdicional.setTipo(csvRecord.get("Tipo"));
+                    tutorials.add(reparacionAdicional);
+                }catch (Exception e){
+                    System.out.println(e+""+csvRecord);
+                }
+            }
+
+            return tutorials;
+        } catch (IOException e) {
+            throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
+        }
     }
 }
