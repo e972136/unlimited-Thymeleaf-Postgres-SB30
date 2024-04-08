@@ -13,7 +13,7 @@ public record EstimacionResponse(
         String placa,
         String marca,
         String modelo,
-        String kM,
+        String kilometraje,
         String colorVehiculo,
         String anioVehiculo,
         String vinOSerie,

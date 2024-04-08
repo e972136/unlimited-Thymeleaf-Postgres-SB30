@@ -105,7 +105,9 @@ public class EstimacionServiceImpl implements EstimacionService {
             }
             estimacion.setTotalReparacionesAdicionales(new BigDecimal(s3));
 
+
             String jsonResult = mapper.writeValueAsString(estimacion);
+
             return mapper.readValue(jsonResult, EstimacionResponse.class);
         }catch (Exception e){
             System.out.println(e);

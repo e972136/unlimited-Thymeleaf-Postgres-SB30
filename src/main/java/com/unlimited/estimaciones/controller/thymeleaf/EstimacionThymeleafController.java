@@ -1,9 +1,10 @@
 package com.unlimited.estimaciones.controller.thymeleaf;
 
 import com.unlimited.estimaciones.config.LoggerColor;
-import com.unlimited.estimaciones.entity.Estimacion;
 import com.unlimited.estimaciones.entity.dto.EstimacionListado;
 import com.unlimited.estimaciones.entity.dto.EstimacionResponse;
+import com.unlimited.estimaciones.repository.AseguradoraRepository;
+import com.unlimited.estimaciones.repository.EstimadorRepository;
 import com.unlimited.estimaciones.service.EstimacionService;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 import static java.util.Objects.isNull;
 
 @Controller
@@ -26,9 +29,14 @@ public class EstimacionThymeleafController {
     private final LoggerColor log = new LoggerColor(LoggerFactory.getLogger(getClass()));
     private final EstimacionService estimacionService;
 
+    private final AseguradoraRepository aseguradoraRepository;
 
-    public EstimacionThymeleafController(EstimacionService estimacionService) {
+    private final EstimadorRepository estimadorRepository;
+
+    public EstimacionThymeleafController(EstimacionService estimacionService, AseguradoraRepository aseguradoraRepository, EstimadorRepository estimadorRepository) {
         this.estimacionService = estimacionService;
+        this.aseguradoraRepository = aseguradoraRepository;
+        this.estimadorRepository = estimadorRepository;
     }
 
     @GetMapping("/listado")
@@ -56,9 +64,6 @@ public class EstimacionThymeleafController {
             @RequestParam(required = false) String busqueda,
             @RequestParam(required = false) String actual
     ){
-        System.out.println("id"+id);
-        System.out.println("busqueda"+busqueda);
-        System.out.println("actual"+actual);
 
         ModelAndView mav = new ModelAndView("editarEstimacion");
 
@@ -78,9 +83,12 @@ public class EstimacionThymeleafController {
             estimacion = estimacionService.findById(id);
         }
 
-
+        List<String> aseguradoras = aseguradoraRepository.findAll().stream().map(a -> a.getNombre()).toList();
+        List<String> estimadores = estimadorRepository.findAll().stream().filter(f->f.isActivo()).map(e->e.getNombreEstimador()).toList();
 
         mav.addObject("estimacion",estimacion);
+        mav.addObject("aseguradoras",aseguradoras);
+        mav.addObject("estimadores",estimadores);
         return mav;
     }
 

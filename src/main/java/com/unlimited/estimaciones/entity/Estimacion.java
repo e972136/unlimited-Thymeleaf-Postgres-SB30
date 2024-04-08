@@ -30,7 +30,9 @@ public class Estimacion {
     String placa;
     String marca;
     String modelo;
-    String kM;
+
+    @Column(name="kM")
+    String kilometraje;
     String colorVehiculo;
     String anioVehiculo;
     String vinOSerie;
@@ -38,6 +40,9 @@ public class Estimacion {
     BigDecimal totalCostosAdicionalesMateriales;
     BigDecimal costoManoDeObraGerente;
     BigDecimal costoMaterialesGerente;
+
+//    @Column(columnDefinition = "LONGTEXT")
+    @Column(columnDefinition = "TEXT")
     String obs;
     String implementadoPor;
     String nFechaIngreso;

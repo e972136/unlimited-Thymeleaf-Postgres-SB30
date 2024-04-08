@@ -58,7 +58,7 @@ public class CSVHelper {
                     estimacion.setPlaca(csvRecord.get("Placa"));
                     estimacion.setMarca(csvRecord.get("Marca"));
                     estimacion.setModelo(csvRecord.get("Modelo"));
-                    estimacion.setKM(csvRecord.get("KM"));
+                    estimacion.setKilometraje(csvRecord.get("KM"));
                     estimacion.setColorVehiculo(csvRecord.get("color_vehiculo"));
                     estimacion.setAnioVehiculo(csvRecord.get("anio_vehiculo"));
                     estimacion.setVinOSerie(csvRecord.get("vinoserie"));
