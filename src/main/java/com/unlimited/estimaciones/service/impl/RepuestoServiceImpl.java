@@ -7,6 +7,8 @@ import com.unlimited.estimaciones.repository.RepuestoRepository;
 import com.unlimited.estimaciones.service.RepuestoService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RepuestoServiceImpl implements RepuestoService {
 
@@ -22,8 +24,8 @@ public class RepuestoServiceImpl implements RepuestoService {
         repuesto.setEstimacionId(repuestoRequest.idEstimacion());
         repuesto.setDescripcion(repuestoRequest.descripcion());
         repuesto.setPrecio(repuestoRequest.precio());
-        repuestoRepository.save(repuesto);
-        return null;
+        Repuesto save = repuestoRepository.save(repuesto);
+        return new RepuestoRequest(save.getEstimacionId(),save.getId(),save.getDescripcion(),save.getPrecio());
     }
 
     @Override
@@ -32,4 +34,23 @@ public class RepuestoServiceImpl implements RepuestoService {
         repuestoRepository.delete(repuesto);
         return repuesto.getEstimacionId();
     }
+
+    @Override
+    public void saveRepuestos(List<Repuesto> repuestos) {
+        repuestoRepository.saveAll(repuestos);
+    }
+/*
+*     public Estimacion saveRepuestos(Estimacion estimacion) {
+        Estimacion estimacionDB = estimacionRepository.findById(estimacion.getId()).orElse(null);
+        List<Repuesto> repuestos = estimacion.getRepuestos();
+        estimacionDB.getRepuestos().forEach(r->{
+            Repuesto repuesto = repuestos.stream().filter(a -> a.getId() == r.getId()).findAny().get();
+            r.setDescripcion(repuesto.getDescripcion());
+            r.setPrecio(repuesto.getPrecio());
+        });
+        return estimacionDB;
+    }
+*
+* */
+
 }
