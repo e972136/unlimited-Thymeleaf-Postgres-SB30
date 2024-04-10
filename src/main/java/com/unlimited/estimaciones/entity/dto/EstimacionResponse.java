@@ -32,6 +32,11 @@ public record EstimacionResponse(
         BigDecimal nCostoMaterialGastado,
         BigDecimal totalRepuestos,
         BigDecimal totalReparaciones,
-        BigDecimal totalReparacionesAdicionales
+        BigDecimal totalReparacionesAdicionales,
+
+        BigDecimal granTotal
 ) {
+    public BigDecimal granTotal(){
+        return totalRepuestos.add(totalCostosManoObra);
+    }
 }

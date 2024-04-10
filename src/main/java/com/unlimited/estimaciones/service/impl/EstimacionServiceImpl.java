@@ -70,6 +70,32 @@ public class EstimacionServiceImpl implements EstimacionService {
         return all.map(this::cambioEstimacionListado);
     }
 
+
+
+
+
+
+    @Override
+    public EstimacionResponse saveEstimacion(EstimacionResponse estimacion) {
+        Estimacion aSalvar = cambioEstimacion(estimacion);
+
+        estimacionRepository.save(aSalvar);
+        return estimacion;
+
+    }
+
+    private Estimacion cambioEstimacion(EstimacionResponse estimacion) {
+        Estimacion cambio = new Estimacion();
+        try{
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+            String jsonResult = mapper.writeValueAsString(estimacion);
+            cambio = mapper.readValue(jsonResult, Estimacion.class);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return cambio;
+    }
+
     private EstimacionListado cambioEstimacionListado(Estimacion estimacion) {
         try{
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
@@ -79,7 +105,6 @@ public class EstimacionServiceImpl implements EstimacionService {
             return null;
         }
     }
-
 
     private EstimacionResponse cambioEstimacionResponse(Estimacion estimacion) {
 
@@ -114,14 +139,4 @@ public class EstimacionServiceImpl implements EstimacionService {
             return null;
         }
     }
-
-
-
-
-    @Override
-    public Estimacion saveEstimacion(Estimacion estimacion) {
-        return null;
-    }
-
-
 }

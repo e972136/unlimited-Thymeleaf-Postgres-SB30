@@ -50,7 +50,7 @@
                                 />
                             </div>
                             <button type="submit" class="btn btn-primary col-3">
-                                Agregar Repuessto
+                                Agregar Repuesto
                             </button>
                         </div>
 
@@ -59,7 +59,7 @@
 
 
                     <!-- https://www.baeldung.com/thymeleaf-list -->
-                    <form th:action="@{/thymeleaf/repuestos/saveRepuestos}" th:object="${estimacion}" method="POST" class="row">
+                    <form th:action="@{/thymeleaf/repuestos/saveRepuestos}" th:object="${estimacion}" method="POST" class="row" id="myForm">
                         <div class="col-1">
                             <label for="estimacion" ><b>Estimacion</b></label>
                         </div>
@@ -107,6 +107,11 @@
                                 </table>
                             </fieldset>
                         </div>
+
+                        <div class="col-3 mt-1">
+                            <button type="submit" class="btn btn-success form-control">Guardar<i class="fa fa-plus-square " aria-hidden="true"></i></button>
+                        </div>
+
                     </form>
                 </div>
 
@@ -114,6 +119,15 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    document.getElementById("myForm").addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+        }
+    });
+</script>
 
 </body>
 

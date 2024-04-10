@@ -14,7 +14,7 @@ public interface EstimacionService {
 
 
 
-    Estimacion saveEstimacion(Estimacion estimacion);
+    EstimacionResponse saveEstimacion(EstimacionResponse estimacion);
 
 
     EstimacionListado findByIdListado(Integer idEstimacion);

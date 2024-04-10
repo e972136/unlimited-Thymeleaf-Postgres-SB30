@@ -4,239 +4,284 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/>
     <title>Editar Estimacion</title>
 </head>
 
 <body>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="row">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
 
-                            <a th:href="@{/thymeleaf/estimacion/listado}" class="btn btn-primary col-sm-6 col-lg-2">Regresar</a>
+                        <a th:href="@{/thymeleaf/estimacion/listado}"
+                           class="btn btn-primary col-sm-6 col-lg-2">Regresar</a>
 
-                            <h3 class="col-sm-6 col-lg-7">
-                                HOJA DE ESTIMACION
-                            </h3>
+                        <h3 class="col-sm-6 col-lg-7">
+                            HOJA DE ESTIMACION
+                        </h3>
 
-                            <form class="form-inline col-sm-6 col-lg-3" action="" method="get" autocomplete="off" th:object="${estimacion}">
-                                <div class="input-group">
-                                    <input name="actual" th:value="${estimacion.id}" hidden>
-                                    <input type="text" name="busqueda" class="form-control"
-                                           placeholder="Buscar estimacion"
-                                           th:value="${param.busqueda}">
-                                    <button class="btn btn-primary" type="submit" id="button-addon1">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <form th:action="@{/thymeleaf/estimacion/crearEstimacion}" method="POST" th:object="${estimacion}" class="row">
-                            <div class="col-sm-6 col-lg-3">
-                                <label for="estimacion"><b>Estimacion</b></label>
-                                <input type="text" class="form-control" id="estimacion" th:field="*{id}" readonly>
+                        <form class="form-inline col-sm-6 col-lg-3" action="" method="get" autocomplete="off"
+                              th:object="${estimacion}">
+                            <div class="input-group">
+                                <input name="actual" th:value="${estimacion.id}" hidden>
+                                <input type="text" name="busqueda" class="form-control"
+                                       placeholder="Buscar estimacion"
+                                       th:value="${param.busqueda}">
+                                <button class="btn btn-primary" type="submit" id="button-addon1">
+                                    <i class="fa fa-search"></i>
+                                </button>
                             </div>
-    
-                            <div class="col-sm-6 col-lg-3">
-                                <label for="fechaEvaluacion"><b>Fecha Evaluacion</b></label>
-                                <input type="date" class="form-control" id="fechaEvaluacion" th:field="*{fechaEvaluacion}">
-                            </div>
-                            <div class="col-sm-12 col-lg-6">
-                                <label for="implementadoPor"><b>Implementado Por</b></label>
-                                <input type="text" class="form-control" id="implementadoPor" th:field="*{implementadoPor}"
-                                    readonly>
-                            </div>
-                            <div class="col-sm-12 col-lg-6">
-                                <label for="asegurado"><b>Asegurado</b></label>
-                                <input type="text" class="form-control" id="asegurado" th:field="*{asegurado}" autocomplete="on">
-                            </div>
-<!--                            cambiar a lista aseguradoras-->
-                            <div class="col-sm-12 col-lg-6">
-                                <label for="aseguradora"><b>Aseguradora</b></label>
-<!--                                <input type="text" class="form-control" id="aseguradora" th:field="*{aseguradora}" autocomplete="on">-->
-                                 <select id="aseguradora"th:field="*{aseguradora}" class="form-control" required>
-                                     <option value="">select option</option>
-                                     <option th:each="option : ${aseguradoras}" th:value="${option}" th:text="${option}"></option>
-                                 </select>
-                            </div>
-<!--                            -->
-                            <div class="col-sm-12 col-lg-6">
-                                <label for="estimadoPor"><b>Estimado Por</b></label>
-<!--                                <input type="text" class="form-control" id="estimadoPor" th:field="*{estimadoPor}">-->
-                                <select id="estimadoPor"th:field="*{estimadoPor}" class="form-control" required>
-                                    <option value="">select option</option>
-                                    <option th:each="option : ${estimadores}" th:value="${option}" th:text="${option}"></option>
-                                </select>
-                            </div>
-                            <div class="col-12">
-                                <h2>
-                                    INFORMACION DEL VEHICULO
-                                </h2>
-                            </div>
-
-                            <div class="col-sm-12 col-lg-3">
-                                <label for="placa"><b>Placa</b></label>
-                                <input type="text" class="form-control" id="placa" th:field="*{placa}">
-                            </div>    
-
-                            <div class="col-8"></div>
-
-                            <div class="col-sm-12 col-lg-3">
-                                <label for="marca"><b>Marca</b></label>
-                                <input type="text" class="form-control" id="marca" th:field="*{marca}">
-                            </div>
-
-                            <div class="col-sm-12 col-lg-4">
-                                <label for="modelo"><b>Modelo</b></label>
-                                <input type="text" class="form-control" id="modelo" th:field="*{modelo}">
-                            </div>
-
-                            <div class="col-sm-12 col-lg-1">
-                                <label for="anioVehiculo"><b>Año</b></label>
-                                <input type="text" class="form-control" id="anioVehiculo" th:field="*{anioVehiculo}">
-                            </div>
-    
-                            <div class="col-sm-12 col-lg-2">
-                                <label for="colorVehiculo"><b>Color</b></label>
-                                <input type="text" class="form-control" id="colorVehiculo" th:field="*{colorVehiculo}">
-                            </div>
-    
-                            <div class="col-sm-12 col-lg-2">
-                                <label for="kilometraje"><b>kM</b></label>
-                                <input type="text" class="form-control" id="kilometraje" th:field="*{kilometraje}">
-                            </div>
-
-                            <div class="col-sm-12 col-lg-6">
-                                <label for="vinOSerie"><b>Vin O Serie</b></label>
-                                <input type="text" class="form-control" id="vinOSerie" th:field="*{vinOSerie}">
-                            </div>
-
-                            <div class="col-6"></div>
-
-
-                            
-                            <div class="col-sm-6 col-lg-3 mt-1">
-                                <label for="totalRepuestos" >Total de costos de repuestos: </label>
-                            </div>
-                            <div class="col-sm-6 col-lg-3 mt-1">
-                                <input type="text" class="form-control" id="totalRepuestos" th:field="*{totalRepuestos}"
-                                    disabled>
-                            </div>
-                            <div class="col-sm-12 col-lg-6  mt-1">
-                                <a th:href="@{/thymeleaf/repuestos/editarRepuestos(id=*{id})}" class="btn btn-warning form-control">
-                                    LISTA DE REPUESTOS NECESARIOS A REEMPLAZAR <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                </a>
-                            </div>
-
-                            <div class="col-sm-6 col-lg-3  mt-1">
-                                <label for="totalReparaciones">Total de costos de mano de obra: </label>
-                            </div>
-                            <div class="col-sm-6 col-lg-3  mt-1">
-                                <input type="text" class="form-control" id="totalReparaciones"
-                                    th:field="*{totalReparaciones}" disabled>
-                            </div>
-                            <div class="col-sm-12 col-lg-6  mt-1">
-                                <a th:href="@{/thymeleaf/reparaciones/editarReparaciones(id=*{id})}" class="btn btn-warning form-control">
-                                    LISTA DE REPARACIONES <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                </a>
-                            </div>
-
-
-                            <div class="col-sm-6 col-lg-3  mt-1">
-                                <label for="totalReparacionesAdicionales" >Total reparaciones adicionales: </label>
-                            </div>
-                            <div class="col-sm-6 col-lg-3  mt-1">
-                                <input type="text" class="form-control " id="totalReparacionesAdicionales"
-                                    th:field="*{totalReparacionesAdicionales}" disabled>
-                            </div>
-                            <div class="col-sm-12 col-lg-6  mt-1 ">
-                                <a th:href="@{/thymeleaf/reparacionesAdicionales/editar(id=*{id})}"
-                                    class="btn btn-warning form-control">
-                                    LISTA DE REPARACIONES ADICIONALES <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                            </div>
-                            
-                            <div class="col-sm-6 col-lg-3  mt-1">
-                                <label for="totalCostosAdicionalesMateriales" >Total costos adicionales (materiales): </label>
-                            </div>
-                            <div class="col-sm-6 col-lg-3 mt-1">
-                                <input type="number" step="0.01" class="form-control" id="totalCostosAdicionalesMateriales"
-                                th:field="*{totalCostosAdicionalesMateriales}">                        
-                            </div>
-
-                            <div class="col-12">
-                                <h2>
-                                    TOTALES
-                                </h2>
-                            </div>
-                            
-
-                            <div class="col-sm-6 col-lg-3  mt-1">
-                                <label for="totalCostosManoObra">Total Costos Mano de Obra: </label>
-                            </div>
-                            <div class="col-sm-6 col-lg-3 mt-1">
-                                <input type="number" step="0.01" class="form-control" id="totalCostosManoObra"
-                                th:field="*{totalCostosManoObra}">
-                            </div>
-
-
-                            <div class="col-sm-6 col-lg-3 mt-1">
-                                <label for="CostoManoDeObraGerente">Costo mano de obra gerente: </label>
-                            </div>
-                            <div class="col-sm-6 col-lg-3 mt-1">
-                                <input type="number" step="0.01" class="form-control" id="CostoManoDeObraGerente"
-                            th:field="*{CostoManoDeObraGerente}">
-                            </div>
-
-                            <div class="col-sm-6 col-lg-3 mt-1">
-                                <label for="totalRepuestosT">Total Repuestos: </label>
-                            </div>
-                            <div class="col-sm-6 col-lg-3 mt-1">
-                                <input type="number" step="0.01" class="form-control" id="totalRepuestosT"
-                                th:field="*{totalRepuestos}">
-                            </div>
-
-                            <div class="col-sm-6 col-lg-6 mt-1">
-
-                            </div>
-
-                            <div class="col-sm-6 col-lg-3 mt-1">
-                                <label for="totalCostosManoObraT">Total Costos Mano de Obra: </label>
-                            </div>
-                            <div class="col-sm-6 col-lg-3 mt-1">
-                                <input type="number" step="0.01" class="form-control" id="totalCostosManoObraT"
-                                th:field="*{totalCostosManoObra}">
-                            </div>
-
-                            <div class="col-sm-6 col-lg-3  mt-1">
-                                <label for="costoMaterialesGerente" >Costo MaterialesG: </label>
-                            </div>
-                            <div class="col-sm-6 col-lg-3 mt-1">
-                                <input type="number" step="0.01" class="form-control" id="costoMaterialesGerente"
-                                th:field="*{costoMaterialesGerente}">
-                            </div>
-
-                            <div class="col-12 mt-3">
-                                <button type="submit" class="btn btn-primary form-control btn-lg">SAVE</button>
-                            </div>
-
                         </form>
                     </div>
+                </div>
+
+                <div class="card-body">
+                    <form th:action="@{/thymeleaf/estimacion/crearEstimacion}" method="POST" th:object="${estimacion}"
+                          class="row" id="myForm">
+                        <div class="col-sm-6 col-lg-3">
+                            <label for="estimacion"><b>Estimacion</b></label>
+                            <input type="text" class="form-control" id="estimacion" th:field="*{id}" readonly>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3">
+                            <label for="fechaEvaluacion"><b>Fecha Evaluacion</b></label>
+                            <input type="date" class="form-control" id="fechaEvaluacion" th:field="*{fechaEvaluacion}">
+                        </div>
+                        <div class="col-sm-12 col-lg-6">
+                            <label for="implementadoPor"><b>Implementado Por</b></label>
+                            <input type="text" class="form-control" id="implementadoPor" th:field="*{implementadoPor}"
+                                   readonly>
+                        </div>
+                        <div class="col-sm-12 col-lg-6">
+                            <label for="asegurado"><b>Asegurado</b></label>
+                            <input type="text" class="form-control" id="asegurado" th:field="*{asegurado}"
+                                   autocomplete="on" onchange="cambio1(this)">
+                        </div>
+                        <!--                            cambiar a lista aseguradoras-->
+                        <div class="col-sm-12 col-lg-6">
+                            <label for="aseguradora"><b>Aseguradora</b></label>
+
+                            <!--                                <input type="text" class="form-control" id="aseguradora" th:field="*{aseguradora}" autocomplete="on">-->
+
+                            <!--                                 <select id="aseguradora"th:field="*{aseguradora}" class="form-control" required>-->
+                            <!--                                     <option value="">select option</option>-->
+                            <!--                                     <option th:each="option : ${aseguradoras}" th:value="${option}" th:text="${option}"></option>-->
+                            <!--                                 </select>-->
+
+                            <input list="names" id="aseguradora" th:field="*{aseguradora}" class="form-control" autocomplete="on" onchange="cambio1(this)">
+                            <datalist id="names">
+                                <option th:each="option : ${aseguradoras}" th:value="${option}" th:text="${option}">
+                            </datalist>
+
+                            <!--                            <input list="names"  th:field="*{aseguradora}" class="form-control">-->
+                            <!--                            <datalist id="names">-->
+                            <!--                                <select id="aseguradora" th:field="*{aseguradora}" class="form-control" required>-->
+                            <!--                                    <option value="">select option</option>-->
+                            <!--                                    <option th:each="option : ${aseguradoras}" th:value="${option}"-->
+                            <!--                                            th:text="${option}"></option>-->
+                            <!--                                </select>-->
+                            <!--                            </datalist>-->
+
+
+                        </div>
+
+                        <!--                            -->
+                        <div class="col-sm-12 col-lg-6">
+                            <label for="estimadoPor"><b>Estimado Por</b></label>
+                            <!--                                <input type="text" class="form-control" id="estimadoPor" th:field="*{estimadoPor}">-->
+                            <select id="estimadoPor" th:field="*{estimadoPor}" class="form-control" onchange="cambio1(this)" required >
+                                <option value="">select option</option>
+                                <option th:each="option : ${estimadores}" th:value="${option}"
+                                        th:text="${option}"></option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <h2>
+                                INFORMACION DEL VEHICULO
+                            </h2>
+                        </div>
+
+                        <div class="col-sm-12 col-lg-3">
+                            <label for="placa"><b>Placa</b></label>
+                            <input type="text" class="form-control" id="placa" th:field="*{placa}" onchange="cambio1(this)">
+                        </div>
+
+                        <div class="col-8"></div>
+
+                        <div class="col-sm-12 col-lg-3">
+                            <label for="marca"><b>Marca</b></label>
+                            <input type="text" class="form-control" id="marca" th:field="*{marca}" onchange="cambio1(this)">
+                        </div>
+
+                        <div class="col-sm-12 col-lg-4">
+                            <label for="modelo"><b>Modelo</b></label>
+                            <input type="text" class="form-control" id="modelo" th:field="*{modelo}" onchange="cambio1(this)">
+                        </div>
+
+                        <div class="col-sm-12 col-lg-1">
+                            <label for="anioVehiculo"><b>Año</b></label>
+                            <input type="text" class="form-control" id="anioVehiculo" th:field="*{anioVehiculo}" onchange="cambio1(this)">
+                        </div>
+
+                        <div class="col-sm-12 col-lg-2">
+                            <label for="colorVehiculo"><b>Color</b></label>
+                            <input type="text" class="form-control" id="colorVehiculo" th:field="*{colorVehiculo}" onchange="cambio1(this)">
+                        </div>
+
+                        <div class="col-sm-12 col-lg-2">
+                            <label for="kilometraje"><b>kM</b></label>
+                            <input type="text" class="form-control" id="kilometraje" th:field="*{kilometraje}" onchange="cambio1(this)">
+                        </div>
+
+                        <div class="col-sm-12 col-lg-6">
+                            <label for="vinOSerie"><b>Vin O Serie</b></label>
+                            <input type="text" class="form-control" id="vinOSerie" th:field="*{vinOSerie}" onchange="cambio1(this)">
+                        </div>
+
+                        <div class="col-6"></div>
+
+
+                        <div class="col-sm-6 col-lg-3 mt-1">
+                            <label for="totalRepuestos">Total de costos de repuestos: </label>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 mt-1">
+                            <input type="text" class="form-control" id="totalRepuestos" th:field="*{totalRepuestos}"
+                                   disabled>
+                        </div>
+                        <div class="col-sm-12 col-lg-6  mt-1">
+                            <a th:href="@{/thymeleaf/repuestos/editarRepuestos(id=*{id})}"
+                               class="btn btn-warning form-control">
+                                LISTA DE REPUESTOS NECESARIOS A REEMPLAZAR <i class="fa fa-pencil-square-o"
+                                                                              aria-hidden="true"></i>
+                            </a>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3  mt-1">
+                            <label for="totalReparaciones">Total de costos de mano de obra: </label>
+                        </div>
+                        <div class="col-sm-6 col-lg-3  mt-1">
+                            <input type="text" class="form-control" id="totalReparaciones"
+                                   th:field="*{totalReparaciones}" disabled>
+                        </div>
+                        <div class="col-sm-12 col-lg-6  mt-1">
+                            <a th:href="@{/thymeleaf/reparaciones/editarReparaciones(id=*{id})}"
+                               class="btn btn-warning form-control">
+                                LISTA DE REPARACIONES <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </a>
+                        </div>
+
+
+                        <div class="col-sm-6 col-lg-3  mt-1">
+                            <label for="totalReparacionesAdicionales">Total reparaciones adicionales: </label>
+                        </div>
+                        <div class="col-sm-6 col-lg-3  mt-1">
+                            <input type="text" class="form-control " id="totalReparacionesAdicionales"
+                                   th:field="*{totalReparacionesAdicionales}" disabled>
+                        </div>
+                        <div class="col-sm-12 col-lg-6  mt-1 ">
+                            <a th:href="@{/thymeleaf/reparacionesAdicionales/editar(id=*{id})}"
+                               class="btn btn-warning form-control">
+                                LISTA DE REPARACIONES ADICIONALES <i class="fa fa-pencil-square-o"
+                                                                     aria-hidden="true"></i></a>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3  mt-1">
+                            <label for="totalCostosAdicionalesMateriales">Total costos adicionales
+                                (materiales): </label>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 mt-1">
+                            <input type="number" step="0.01" class="form-control" id="totalCostosAdicionalesMateriales"
+                                   th:field="*{totalCostosAdicionalesMateriales}" onchange="cambio1(this)">
+                        </div>
+
+                        <div class="col-12">
+                            <h2>
+                                TOTALES
+                            </h2>
+                        </div>
+
+
+                        <div class="col-sm-6 col-lg-3  mt-1">
+                            <label for="totalCostosManoObra">Total Costos Mano de Obra: </label>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 mt-1">
+                            <input type="number" step="0.01" class="form-control" id="totalCostosManoObra"
+                                   th:field="*{totalCostosManoObra}" onchange="cambio1(this)">
+                        </div>
+
+
+                        <div class="col-sm-6 col-lg-3 mt-1">
+                            <label for="CostoManoDeObraGerente">Costo mano de obra gerente: </label>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 mt-1">
+                            <input type="number" step="0.01" class="form-control" id="CostoManoDeObraGerente"
+                                   th:field="*{CostoManoDeObraGerente}" onchange="cambio1(this)">
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3 mt-1">
+                            <label for="totalRepuestosT">Total Repuestos: </label>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 mt-1">
+                            <input type="number" step="0.01" class="form-control" id="totalRepuestosT"
+                                   th:field="*{totalRepuestos}" onchange="cambio1(this)">
+                        </div>
+
+                        <div class="col-sm-6 col-lg-6 mt-1">
+                            <input type="number" step="0.01" class="form-control" id="granTotal"
+                                   th:field="*{granTotal}" disabled>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3 mt-1">
+                            <label for="totalCostosManoObraT">Total Costos Mano de Obra: </label>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 mt-1">
+                            <input type="number" step="0.01" class="form-control" id="totalCostosManoObraT"
+                                   th:field="*{totalCostosManoObra}" onchange="cambio1(this)">
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3  mt-1">
+                            <label for="costoMaterialesGerente">Costo MaterialesG: </label>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 mt-1">
+                            <input type="number" step="0.01" class="form-control" id="costoMaterialesGerente"
+                                   th:field="*{costoMaterialesGerente}"  onchange="cambio1(this)" >
+                        </div>
+
+                        <div class="col-12 mt-3">
+                            <button type="submit" class="btn btn-primary form-control btn-lg">GUARDAR</button>
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    
-    <a th:href="@{/thymeleaf/estimacion/estimaciones}" class="btn btn-primary">Regresar</a>
+</div>
+
+<a th:href="@{/thymeleaf/estimacion/listado}"  class="btn btn-primary col-sm-6 col-lg-2">Regresar</a>
+
+
+<script>
+    document.getElementById("myForm").addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+        }
+    });
+
+    function cambio1(t) {
+        console.log("objeto: "+t.name)
+        var casilla = document.getElementById(t.name)
+        casilla.style.backgroundColor = '#ffcccc'
+    }
+
+</script>
 
 </body>
 

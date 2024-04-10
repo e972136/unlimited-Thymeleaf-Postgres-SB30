@@ -1,20 +1,20 @@
 package com.unlimited.estimaciones.controller.thymeleaf;
 
 import com.unlimited.estimaciones.config.LoggerColor;
+import com.unlimited.estimaciones.entity.Estimacion;
 import com.unlimited.estimaciones.entity.dto.EstimacionListado;
 import com.unlimited.estimaciones.entity.dto.EstimacionResponse;
 import com.unlimited.estimaciones.repository.AseguradoraRepository;
 import com.unlimited.estimaciones.repository.EstimadorRepository;
 import com.unlimited.estimaciones.service.EstimacionService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -89,6 +89,20 @@ public class EstimacionThymeleafController {
         mav.addObject("estimacion",estimacion);
         mav.addObject("aseguradoras",aseguradoras);
         mav.addObject("estimadores",estimadores);
+        return mav;
+    }
+
+
+
+    @PostMapping("/crearEstimacion")
+    public ModelAndView saveEstimacion(
+            @ModelAttribute EstimacionResponse estimacion,
+            HttpServletRequest request,
+            RedirectAttributes redirectAttrs
+    ){
+
+        ModelAndView mav = new ModelAndView("redirect:/thymeleaf/estimacion/editarEstimacion?id="+estimacion.id());
+        estimacionService.saveEstimacion(estimacion);
         return mav;
     }
 
