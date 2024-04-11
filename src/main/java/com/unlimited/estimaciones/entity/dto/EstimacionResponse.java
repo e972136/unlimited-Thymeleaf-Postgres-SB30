@@ -4,6 +4,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 
+import static java.util.Objects.isNull;
+
 public record EstimacionResponse(
         int id,
         String asegurado,
@@ -37,6 +39,8 @@ public record EstimacionResponse(
         BigDecimal granTotal
 ) {
     public BigDecimal granTotal(){
-        return totalRepuestos.add(totalCostosManoObra);
+        double _totalRepuestos = isNull(totalRepuestos)?0.0:totalRepuestos.doubleValue();
+        double _totalCostosManoObra = isNull(totalCostosManoObra)?0.0:totalCostosManoObra.doubleValue();
+        return new BigDecimal(_totalRepuestos+_totalCostosManoObra);
     }
 }
