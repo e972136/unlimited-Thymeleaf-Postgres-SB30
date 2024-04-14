@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Date;
 import java.util.List;
 
 import static java.util.Objects.isNull;
@@ -45,7 +46,7 @@ public class EstimacionThymeleafController {
             @RequestParam(value = "message",required = false) String message,
             @RequestParam(required = false) String busqueda
     ){
-        log.infoRed("/thymeleaf/estimacion/");
+        log.infoRed("/thymeleaf/estimacion/listado");
         ModelAndView mav = new ModelAndView("listado");
         Page<EstimacionListado> estimaciones;
         if(isNull(busqueda)){
@@ -56,6 +57,26 @@ public class EstimacionThymeleafController {
         mav.addObject("listado",estimaciones);
         return mav;
     }
+
+    @GetMapping("/crearEstimacion")
+    public ModelAndView obtenerPaginaCrearEstimacion(
+
+    ){
+        ModelAndView mav = new ModelAndView("editarEstimacion");
+        Estimacion estimacion = new Estimacion();
+        estimacion.setFechaEvaluacion(new Date());
+        estimacion.setImplementadoPor("url");
+
+        EstimacionResponse response = estimacionService.saveNueva(estimacion);
+        List<String> aseguradoras = aseguradoraRepository.findAll().stream().map(a -> a.getNombre()).toList();
+        List<String> estimadores = estimadorRepository.findAll().stream().filter(f->f.isActivo()).map(e->e.getNombreEstimador()).toList();
+
+        mav.addObject("estimacion",response);
+        mav.addObject("aseguradoras",aseguradoras);
+        mav.addObject("estimadores",estimadores);
+        return mav;
+    }
+
 
     @GetMapping("/editarEstimacion")
     public ModelAndView obtenerPaginaEditarEstimacion(

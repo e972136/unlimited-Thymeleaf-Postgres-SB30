@@ -70,9 +70,11 @@ public class EstimacionServiceImpl implements EstimacionService {
         return all.map(this::cambioEstimacionListado);
     }
 
-
-
-
+    @Override
+    public EstimacionResponse saveNueva(Estimacion estimacion) {
+        estimacion = estimacionRepository.save(estimacion);
+        return cambioEstimacionResponse(estimacion);
+    }
 
 
     @Override

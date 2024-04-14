@@ -22,4 +22,6 @@ public interface EstimacionService {
     Page<EstimacionListado> traerListado(Pageable page);
 
     Page<EstimacionListado> traerListadoFiltrado(String busqueda, Pageable page);
+
+    EstimacionResponse saveNueva(Estimacion estimacion);
 }
