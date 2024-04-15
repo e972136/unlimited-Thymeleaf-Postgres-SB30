@@ -10,5 +10,8 @@ public interface RepuestoRepository extends JpaRepository<Repuesto,Integer> {
     @Query(value = "SELECT SUM(precio) FROM repuesto where estimacion_id=:estimacion_id", nativeQuery = true)
     String selectTotals(Integer estimacion_id);
 
+    @Query(value = "SELECT DISTINCT descripcion FROM repuesto order by descripcion", nativeQuery = true)
+    List<String> selectDescripciones();
+
     List<Repuesto> findAllByEstimacionIdOrderByIdAsc(int id);
 }

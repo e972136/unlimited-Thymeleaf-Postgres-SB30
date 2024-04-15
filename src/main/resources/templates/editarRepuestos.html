@@ -31,12 +31,24 @@
                             <div class="col-6">
                                 <label class="form-label">Detalle Repuesto</label>
 
+<!--                                <input-->
+<!--                                        class="form-control"-->
+<!--                                        type="text"-->
+<!--                                        name="descripcion"-->
+<!--                                        required-->
+<!--                                />-->
+
                                 <input
                                         class="form-control"
                                         type="text"
                                         name="descripcion"
+                                        list="names"
                                         required
                                 />
+                                <datalist id="names">
+                                    <option th:each="option : ${historial}" th:value="${option}" th:text="${option}">
+                                </datalist>
+
                             </div>
                             <div class="col-3">
                                 <label class="form-label">Precio</label>

@@ -35,7 +35,10 @@ public class RepuestoThymeleafController {
         ModelAndView mav = new ModelAndView("editarRepuestos");
         List<Repuesto> repuestos = repuestoRepository.findAllByEstimacionIdOrderByIdAsc(id);
 
+        List<String> historial = repuestoRepository.selectDescripciones();
+
         mav.addObject("estimacion",new MantenimientoRepuesto(id,repuestos,new RepuestoRequest(id,0,"", BigDecimal.ZERO)));
+        mav.addObject("historial",historial);
         return mav;
     }
 
