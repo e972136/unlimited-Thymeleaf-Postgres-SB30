@@ -30,7 +30,7 @@ public class ReparacionServiceImpl implements ReparacionService {
         reparacion.setEstimacionId(reparacionRequest.idEstimacion());
         reparacion.setPrecio(reparacionRequest.precio());
         Reparacion save = reparacionRepository.save(reparacion);
-        return new RepuestoRequest(save.getEstimacionId(),save.getId(),save.getDetalleReparacion(),save.getPrecio());
+        return new RepuestoRequest(save.getEstimacionId(),save.getId(),save.getDetalleReparacion(), 1,save.getPrecio());
     }
 
 

@@ -27,7 +27,7 @@
                 <div class="card-body">
 
                     <form th:action="@{/thymeleaf/repuestos/saveRepuestosEntity(idEstimacion=*{estimacionId})}" th:object="${estimacion}" method="POST">
-                        <div class="row">
+                        <div class="row mb-3">
                             <div class="col-6">
                                 <label class="form-label">Detalle Repuesto</label>
 
@@ -48,10 +48,24 @@
                                 <datalist id="names">
                                     <option th:each="option : ${historial}" th:value="${option}" th:text="${option}">
                                 </datalist>
-
                             </div>
+
+
+                            <div class="col-1">
+                                <label class="form-label">Cantidad</label>
+
+                                <input
+                                        class="form-control"
+                                        type="number"
+                                        step="0.01"
+                                        name="cantidad"
+                                        required
+                                />
+                            </div>
+
+
                             <div class="col-3">
-                                <label class="form-label">Precio</label>
+                                <label class="form-label">Precio Total</label>
 
                                 <input
                                         class="form-control"
@@ -61,7 +75,7 @@
                                         required
                                 />
                             </div>
-                            <button type="submit" class="btn btn-primary col-3">
+                            <button type="submit" class="btn btn-primary col-2">
                                 Agregar Repuesto
                             </button>
                         </div>
@@ -95,10 +109,11 @@
                                 <table>
                                     <thead>
                                     <tr>
-                                        <th >id</th>
-                                        <th >Descripcion</th>
-                                        <th >Precio</th>
-                                        <th >Borrar</th>
+                                        <th class="col-2">id</th>
+                                        <th class="col-6">Descripcion</th>
+                                        <th class="col-1">Cantidad</th>
+                                        <th class="col-2">Precio</th>
+                                        <th class="col-1">Borrar</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -107,7 +122,8 @@
                                             <input class="form-control"  th:field="*{repuestos[__${itemStat.index}__].id}" readonly/>
                                             <input class="form-control"  th:field="*{repuestos[__${itemStat.index}__].estimacionId}" hidden/>
                                         </td>
-                                        <td class="col-7"><input class="form-control"  th:field="*{repuestos[__${itemStat.index}__].descripcion}" required/></td>
+                                        <td class="col-6"><input class="form-control"  th:field="*{repuestos[__${itemStat.index}__].descripcion}" required/></td>
+                                        <td class="col-1"><input class="form-control" type="number" step="0.01" th:field="*{repuestos[__${itemStat.index}__].cantidad}" required/></td>
                                         <td class="col-2"><input class="form-control" type="number" step="0.01" th:field="*{repuestos[__${itemStat.index}__].precio}" required/></td>
                                         <td class="col-1">
                                             <a th:href="@{/thymeleaf/repuestos/eliminarRepuesto(idRepuesto=${rep.id},idEstimacion=${estimacion.estimacionId})}" class="btn btn-danger btn-sm">

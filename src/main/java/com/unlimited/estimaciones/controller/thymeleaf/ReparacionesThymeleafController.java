@@ -35,7 +35,7 @@ public class ReparacionesThymeleafController {
 
         List<Reparacion> list = reparacionService.findAllByEstimacionIdOrderById(id);
 
-        mav.addObject("estimacion",new MantenimientoReparacion(id,list,new RepuestoRequest(id,0,"", BigDecimal.ZERO)));
+        mav.addObject("estimacion",new MantenimientoReparacion(id,list,new RepuestoRequest(id,0,"", 1,BigDecimal.ZERO)));
 
         return mav;
     }

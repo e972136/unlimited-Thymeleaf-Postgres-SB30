@@ -22,5 +22,6 @@ public class Repuesto {
     Integer estimacionId;
 
     String descripcion;
+    Integer cantidad;
     BigDecimal precio;
 }

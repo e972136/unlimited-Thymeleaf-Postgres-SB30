@@ -24,8 +24,9 @@ public class RepuestoServiceImpl implements RepuestoService {
         repuesto.setEstimacionId(repuestoRequest.idEstimacion());
         repuesto.setDescripcion(repuestoRequest.descripcion());
         repuesto.setPrecio(repuestoRequest.precio());
+        repuesto.setCantidad(repuestoRequest.cantidad());
         Repuesto save = repuestoRepository.save(repuesto);
-        return new RepuestoRequest(save.getEstimacionId(),save.getId(),save.getDescripcion(),save.getPrecio());
+        return new RepuestoRequest(save.getEstimacionId(),save.getId(),save.getDescripcion(),save.getCantidad(),save.getPrecio());
     }
 
     @Override
