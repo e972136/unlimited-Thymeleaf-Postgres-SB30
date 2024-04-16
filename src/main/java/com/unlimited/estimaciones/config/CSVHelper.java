@@ -96,6 +96,7 @@ public class CSVHelper {
                     repuesto.setEstimacionId(Integer.parseInt(csvRecord.get("estimacion_id")));
                     repuesto.setDescripcion(csvRecord.get("descripcion"));
                     repuesto.setPrecio(new BigDecimal(csvRecord.get("precio")));
+                    repuesto.setCantidad(1);
                     tutorials.add(repuesto);
                 }catch (Exception e){
                     System.out.println(e+""+csvRecord);

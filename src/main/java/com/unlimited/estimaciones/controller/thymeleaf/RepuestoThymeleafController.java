@@ -37,7 +37,7 @@ public class RepuestoThymeleafController {
 
         List<String> historial = repuestoRepository.selectDescripciones();
 
-        mav.addObject("estimacion",new MantenimientoRepuesto(id,repuestos,new RepuestoRequest(id,0,"", 1,BigDecimal.ZERO)));
+        mav.addObject("estimacion",new MantenimientoRepuesto(id,repuestos,new RepuestoRequest(id,0,"", 1,BigDecimal.ZERO,"")));
         mav.addObject("historial",historial);
         return mav;
     }

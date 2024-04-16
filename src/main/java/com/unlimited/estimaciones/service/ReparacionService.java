@@ -9,4 +9,6 @@ public interface ReparacionService {
     List<Reparacion> findAllByEstimacionIdOrderById(int id);
 
     RepuestoRequest saveReparacion(RepuestoRequest reparacionRequest);
+
+    void saveReparaciones(List<Reparacion> reparaciones);
 }

@@ -1,6 +1,7 @@
 package com.unlimited.estimaciones.controller.thymeleaf;
 
 import com.unlimited.estimaciones.config.LoggerColor;
+import com.unlimited.estimaciones.entity.Estimacion;
 import com.unlimited.estimaciones.entity.Reparacion;
 import com.unlimited.estimaciones.entity.dto.RepuestoRequest;
 import com.unlimited.estimaciones.service.ReparacionService;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -35,7 +37,7 @@ public class ReparacionesThymeleafController {
 
         List<Reparacion> list = reparacionService.findAllByEstimacionIdOrderById(id);
 
-        mav.addObject("estimacion",new MantenimientoReparacion(id,list,new RepuestoRequest(id,0,"", 1,BigDecimal.ZERO)));
+        mav.addObject("estimacion",new MantenimientoReparacion(id,list,new RepuestoRequest(id,0,"", 1,BigDecimal.ZERO,"")));
 
         return mav;
     }
@@ -55,6 +57,20 @@ public class ReparacionesThymeleafController {
         return mav;
     }
 
+    @PostMapping("/saveReparaciones")
+    public ModelAndView guardarReparaciones(
+            @ModelAttribute  MantenimientoReparacion estimacion
+            ){
+
+        log.infoRed("/principal/saveReparaciones/"+estimacion);
+
+        ModelAndView mav = new ModelAndView("redirect:/thymeleaf/estimacion/editarEstimacion?id="+estimacion.estimacionId);
+
+        reparacionService.saveReparaciones(estimacion.getReparaciones());
+
+        return mav;
+    }
+
 
     @Data
     @AllArgsConstructor
@@ -63,5 +79,7 @@ public class ReparacionesThymeleafController {
         List<Reparacion> reparaciones;
         RepuestoRequest repuestoRequest;
     }
+
+
 
 }
